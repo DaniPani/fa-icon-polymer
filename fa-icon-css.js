@@ -1,4 +1,4 @@
-import { LitElement, html } from '@polymer/lit-element';
+import { html } from '@polymer/lit-element';
 import { unsafeHTML } from 'lit-html/lib/unsafe-html';
 import fontawesome from '@fortawesome/fontawesome';
 

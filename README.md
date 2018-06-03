@@ -1,6 +1,6 @@
 # \<fa-icon\>
 
-A Polymer 3 component to wrap Font Awesome 5 in a convenient to use webcomponent. This component is based on the free fonts provide by [Font Awesome](https://fontawesome.com). It includes the styles solid, regular and brands. It is not based on the standard `PolymerElement` but uses the lighter [lit-element](https://github.com/Polymer/lit-element).
+A Polymer 3 component to wrap Font Awesome 5 in a convenient to use web-component. This component is based on the free fonts provide by [Font Awesome](https://fontawesome.com). It includes the styles solid, regular and brands. It is not based on the standard `PolymerElement` but uses the lighter [lit-element](https://github.com/Polymer/lit-element).
 
 ```html
 <fa-icon icon-prefix="fas" icon-name="home"></fa-icon><br/>
