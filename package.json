@@ -3,6 +3,10 @@
   "description": "Font Awesome Icon Element",
   "main": "fa-icon.js",
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@polymer/polymer": "^3.0.0"
   },
   "devDependencies": {

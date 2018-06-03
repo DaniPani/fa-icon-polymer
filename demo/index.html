@@ -22,10 +22,159 @@
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic fa-icon demo</h3>
+      <h3>Without arguments</h3>
       <demo-snippet>
         <template>
           <fa-icon></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>You can skip prefix attribute. "far" is default.</h3>
+      <demo-snippet>
+        <template>
+          <fa-icon name="heart"></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>You can skip the "fa-" prefix, too. </h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="far" name="heart"></fa-icon>
+          <fa-icon prefix="fas" name="heart"></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>But you can stick to it. </h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="far" name="fa-heart"></fa-icon>
+          <fa-icon prefix="fas" name="fa-heart"></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Sizes </h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="fas" name="heart" size="xs"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="sm"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="lg"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="2x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="3x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="4x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="5x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="6x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="7x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="8x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="9x"></fa-icon><br/>
+          <fa-icon prefix="fas" name="heart" size="10x"></fa-icon><br/>
+        </template>
+      </demo-snippet>
+      <h3>Fixed Width</h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="fas" name="home"></fa-icon><br/>
+          <fa-icon prefix="fas" name="info"></fa-icon><br/>
+          <fa-icon prefix="fas" name="book"></fa-icon><br/>
+          <fa-icon prefix="fas" name="pencil-alt"></fa-icon><br/>
+          <fa-icon prefix="fas" name="cog" fixed-width></fa-icon><br/>
+
+          <p>vs.</p>
+
+          <fa-icon prefix="fas" name="home" fixed-width></fa-icon><br/>
+          <fa-icon prefix="fas" name="info" fixed-width></fa-icon><br/>
+          <fa-icon prefix="fas" name="book" fixed-width></fa-icon><br/>
+          <fa-icon prefix="fas" name="pencil-alt" fixed-width></fa-icon><br/>
+          <fa-icon prefix="fas" name="cog" fixed-width></fa-icon><br/>
+        </template>
+      </demo-snippet>
+      <h3>Borders & Pulled Icons</h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="fas" name="quote-left" size="2x" border pull-left></fa-icon>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla possimus velit dolores libero aspernatur? Repellendus ab, voluptatem praesentium eveniet error totam cupiditate tempora at nesciunt quia odit voluptatibus et eum.
+          Gatsby believed in the green light, the orgastic future that year by year recedes before us.
+          It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further...
+          And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
+        </template>
+      </demo-snippet>
+      <h3>Animated Icons</h3>
+      <demo-snippet>
+        <template>
+          <fa-icon prefix="fas" name="spinner" size="3x" spin></fa-icon>
+          <fa-icon prefix="fas" name="circle-notch" size="3x" spin></fa-icon>
+          <fa-icon prefix="fas" name="sync" size="3x" spin></fa-icon>
+          <fa-icon prefix="fas" name="cog" size="3x" spin></fa-icon>
+          <fa-icon prefix="fas" name="spinner" size="3x" pulse></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Scaling</h3>
+      <demo-snippet>
+        <template>
+          <style>
+            fa-icon svg {
+              background: mistyrose;
+              margin-right: 8px;
+            }
+          </style>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=100></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=120></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Rotating</h3>
+      <demo-snippet>
+        <template>
+          <style>
+            fa-icon svg {
+              background: mistyrose;
+              margin-right: 8px;
+            }
+          </style>
+          <fa-icon prefix="fas" name="magic" size="4x" rotate=-90></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x"></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" rotate=90></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" rotate=120></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" rotate=180></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Positioning</h3>
+      <demo-snippet>
+        <template>
+          <style>
+            fa-icon svg {
+              background: mistyrose;
+              margin-right: 8px;
+            }
+          </style>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50 translate-x=-6></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50 translate-y=-6></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50 translate-x=6></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" scale=50 translate-y=6></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Flipping</h3>
+      <demo-snippet>
+        <template>
+          <style>
+            fa-icon svg {
+              background: mistyrose;
+              margin-right: 8px;
+            }
+          </style>
+          <fa-icon prefix="fas" name="magic" size="4x"></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" flip-x></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" flip-y></fa-icon>
+          <fa-icon prefix="fas" name="magic" size="4x" flip-y flip-x></fa-icon>
+        </template>
+      </demo-snippet>
+      <h3>Flipping</h3>
+      <demo-snippet>
+        <template>
+          <style>
+            fa-icon svg {
+              margin-right: 8px;
+            }
+          </style>
+          <fa-icon prefix="fas" name="pencil-alt" size="4x" mask-prefix="fas" mask-name="comment" scale=50 translate-y=-0.5></fa-icon>
+          <fa-icon prefix="fab" name="facebook-f" size="4x" mask-prefix="fas" mask-name="circle" scale=80 translate-y=1.6 translate-x=1.25></fa-icon>
+          <fa-icon prefix="fas" name="headphones" size="4x" mask-prefix="fas" mask-name="square" scale=70></fa-icon>
         </template>
       </demo-snippet>
     </div>
