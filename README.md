@@ -1,21 +1,23 @@
 # \<fa-icon\>
 
-Font Awesome Icon Element
+A Polymer 3 component to wrap Font Awesome 5 in a convenient to use webcomponent.
 
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) and npm (packaged with [Node.js](https://nodejs.org)) installed. Run `npm install` to install your element's dependencies, then run `polymer serve` to serve your element locally.
-
-## Viewing Your Element
-
-```
-$ polymer serve
+```html
+<fa-icon icon-prefix="fas" icon-name="home"></fa-icon><br/>
+<fa-icon icon-prefix="fas" icon-name="cog" fixed-width></fa-icon><br/>
+<fa-icon icon-prefix="fas" icon-name="cog" size="3x" spin></fa-icon>
+<fa-icon icon-prefix="fas" icon-name="magic" size="4x" scale=50 translate-y=6></fa-icon>
+<fa-icon icon-prefix="fas" icon-name="pencil-alt" size="4x" mask-prefix="fas" mask-name="comment" scale=50 translate-y=-0.5></fa-icon>
 ```
 
-## Running Tests
+## Todo
 
-```
-$ polymer test
-```
+- [ ] Write test code.
+- [ ] Setup CI.
+- [ ] Add support for [layering, text & counters](https://fontawesome.com/how-to-use/svg-with-js#layering)
+- [ ] Find a more elegant way to include the Font Awesome CSS.
+- [ ] Detailed README.md file.
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+## License
+
+This project is licensed under MIT License. See LICENSE file.
