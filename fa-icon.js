@@ -1,9 +1,12 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from '@polymer/lit-element';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html';
 
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
 import brand from '@fortawesome/fontawesome-free-brands';
 import regular from '@fortawesome/fontawesome-free-regular';
+
+import { style } from './fa-icon-css.js';
 
 fontawesome.library.add(solid, brand, regular);
 
@@ -15,80 +18,27 @@ fontawesome.library.add(solid, brand, regular);
  * @polymer
  * @demo demo/index.html
  */
-class FaIcon extends PolymerElement {
+class FaIcon extends LitElement {
 
   static get properties() {
     return {
-      prefix: {
-        type: String,
-        value: 'far',
-        observer: '_refreshHTML'
-      },
-      name: {
-        type: String,
-        value: 'heart',
-        observer: '_refreshHTML'
-      },
-      size: {
-        type: String,
-        observer: '_refreshHTML'
-      },
-      fixedWidth: {
-        type: Boolean,
-        observer: '_refreshHTML'
-      },
-      border: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      pullLeft: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      pullRight: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      spin: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      pulse: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      scale: {
-        type: Number,
-        observer: '_refreshHTML',
-      },
-      rotate: {
-        type: Number,
-        observer: '_refreshHTML',
-      },
-      translateX: {
-        type: Number,
-        observer: '_refreshHTML',
-      },
-      translateY: {
-        type: Number,
-        observer: '_refreshHTML',
-      },
-      flipX: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      flipY: {
-        type: Boolean,
-        observer: '_refreshHTML',
-      },
-      maskPrefix: {
-        type: String,
-        observer: '_refreshHTML'
-      },
-      maskName: {
-        type: String,
-        observer: '_refreshHTML'
-      },
+      'icon-prefix': String,
+      'icon-name': String,
+      size: String,
+      'fixed-width': Boolean,
+      border: Boolean,
+      'pull-left': Boolean,
+      'pull-right': Boolean,
+      spin: Boolean,
+      pulse: Boolean,
+      scale: Number,
+      rotate: Number,
+      'translate-x': Number,
+      'translate-y': Number,
+      'flip-x': Boolean,
+      'flip-y': Boolean,
+      'mask-group': String,
+      'mask-name': String,
     };
   }
 
@@ -96,79 +46,83 @@ class FaIcon extends PolymerElement {
     return v.replace(/^fa-/, '');
   }
 
-
-  _computeIconSvgString() {
-    // let's add some classes based on properties
+  _computeIconSvgString(props) {
+    var icon = {};
     var classes = [];
+    var transform = {};
+    var mask = {};
 
-    if (this.size !== undefined) {
-      let size = this._removeFaPrefix(this.size);
-      if (['xs', 'sm', 'lg', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].includes(size))
-        classes.push('fa-' + size);
+    for (var key in props) {
+      var value = props[key];
+
+      switch (key) {
+      case 'icon-prefix':
+        icon['prefix'] = value;
+        break;
+      case 'icon-name':
+        icon['iconName'] = this._removeFaPrefix(value);
+        break;
+      case 'size':
+        var size = this._removeFaPrefix(value);
+        if (['xs', 'sm', 'lg', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].includes(size))
+          classes.push('fa-' + size);
+        break;
+      case 'fixed-width':
+        classes.push('fa-fw');
+        break;
+      case 'pull-left':
+      case 'pull-right':
+        this.classList.add('fa-' + key);
+        classes.push('fa-' + key);
+        break;
+      case 'border':
+      case 'spin':
+      case 'pulse':
+        classes.push('fa-' + key);
+        break;
+      case 'scale':
+        transform['size'] = 16 * this.scale / 100;
+        break;
+      case 'rotate':
+        transform['rotate'] = value;
+        break;
+      case 'translate-x':
+      case 'translate-y':
+        transform[key.replace(/^translate-/, '')] = value;
+        break;
+      case 'flip-x':
+        transform['flipX'] = value;
+        break;
+      case 'flip-y':
+        transform['flipY'] = value;
+        break;
+      case 'mask-prefix':
+        mask['prefix'] = value;
+        break;
+      case 'mask-name':
+        mask['iconName'] = this._removeFaPrefix(value);
+        break;
+
+      }
     }
 
-    if (this.fixedWidth)
-      classes.push('fa-fw');
-
-    if (this.border)
-      classes.push('fa-border');
-
-    if (this.pullLeft)
-      classes.push('fa-pull-left');
-
-    if (this.pullRight)
-      classes.push('fa-pull-right');
-
-    if (this.spin)
-      classes.push('fa-spin');
-
-    if (this.pulse)
-      classes.push('fa-pulse');
-
-    // calculate the transforms
-    var transform = {};
-
-    if (this.scale !== undefined)
-      transform['size'] = 16 * this.scale / 100;
-
-    if (this.rotate !== undefined)
-      transform['rotate'] = this.rotate;
-
-    if (this.translateX !== undefined)
-      transform['x'] = this.translateX;
-
-    if (this.translateY !== undefined)
-      transform['y'] = this.translateY;
-
-    if (this.flipX)
-      transform['flipX'] = true;
-
-    if (this.flipY)
-      transform['flipY'] = true;
-
-    // masking
-    var mask;
-
-    if (this.maskPrefix !== undefined && this.maskName !== undefined)
-      mask = {
-        prefix: this.maskPrefix,
-        iconName: this._removeFaPrefix(this.maskName)
-      };
-
-    return fontawesome.icon({
-      prefix: this.prefix,
-      iconName: this._removeFaPrefix(this.name),
-    }, { classes: classes, transform: transform, mask: mask }).html;
+    return fontawesome.icon(icon, { classes: classes, transform: transform, mask: mask }).html;
   }
 
-  ready() {
-    this._refreshHTML();
+  _render(props) {
+    return html`
+    <style>
+      :host {
+        display: inline-block;
+      }
+    
+      svg {
+        color: var(--icon-color, black);
+        background-color: var(--icon-background-color, white);
+      }
+    </style>
+    ${style} ${unsafeHTML(this._computeIconSvgString(props))}`;
   }
-
-  _refreshHTML() {
-    this.innerHTML = this._computeIconSvgString();
-  }
-
 }
 
 window.customElements.define('fa-icon', FaIcon);
