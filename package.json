@@ -1,7 +1,14 @@
 {
-  "name": "fa-icon",
+  "name": "fa-icon-polymer",
+  "version": "0.2.0",
   "description": "Font Awesome Icon Element",
   "main": "fa-icon.js",
+  "repository": {
+    "url": "https://github.com/oliverandrich/fa-icon-polymer",
+    "type": "git"
+  },
+  "author": "Oliver Andrich <oliver@andrich.me>",
+  "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
