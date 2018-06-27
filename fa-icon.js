@@ -1,15 +1,9 @@
-import { LitElement, html } from '@polymer/lit-element';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html';
+import {
+  LitElement,
+  html
+} from '@polymer/lit-element';
 
 import fontawesome from '@fortawesome/fontawesome';
-import solid from '@fortawesome/fontawesome-free-solid';
-import brand from '@fortawesome/fontawesome-free-brands';
-import regular from '@fortawesome/fontawesome-free-regular';
-
-import { style } from './fa-icon-css.js';
-
-fontawesome.library.add(solid, brand, regular);
-
 /**
  * `fa-icon`
  * Font Awesome Icon Element
@@ -37,80 +31,114 @@ class FaIcon extends LitElement {
       'translate-y': Number,
       'flip-x': Boolean,
       'flip-y': Boolean,
-      'mask-group': String,
+      'mask-prefix': String,
       'mask-name': String,
     };
+  }
+
+  async _lazyLoading(prefix, name) {
+    name = `${name.substr(0,1).toUpperCase()}${name.substr(1, name.length)}`.replace(/-./, a => a[1].toUpperCase())
+    let styles = []
+    switch (prefix) {
+      case 'fas':
+        let solid = await import('@fortawesome/fontawesome-free-solid')
+        styles.push(solid[`fa${name}`])
+        break;
+      case 'fab':
+        let brands = await import('@fortawesome/fontawesome-free-brands')
+        styles.push(brands[`fa${name}`])
+        break;
+      case 'far':
+      let regular = await import ('@fortawesome/fontawesome-free-regular')
+        styles.push(regular[`fa${name}`])
+        break;
+    }
+    fontawesome.library.add(...styles);
+
   }
 
   _removeFaPrefix(v) {
     return v.replace(/^fa-/, '');
   }
 
-  _computeIconSvgString(props) {
-    var icon = {};
-    var classes = [];
-    var transform = {};
-    var mask = {};
+  _computeProps(props) {
+    return Object.entries(props).map(([property, value]) => [property.replace(/-/g, '_'), value]).reduce((a, [property, value]) => {
+      a[property] = value
+      return Object.assign(a)
+    }, {})
+  }
 
-    for (var key in props) {
-      var value = props[key];
+  async _computeIconSvgString({
+    icon_prefix = 'fas',
+    icon_name,
+    size = '1x',
+    fixed_width = false,
+    border = false,
+    pull_left = false,
+    pull_right = false,
+    spin = false,
+    pulse = false,
+    scale = 100,
+    rotate = 0,
+    translate_x = 0,
+    translate_y = 0,
+    flip_x = false,
+    flip_y = false,
+    mask_prefix,
+    mask_name = ''
+  }) {
 
-      switch (key) {
-      case 'icon-prefix':
-        icon['prefix'] = value;
-        break;
-      case 'icon-name':
-        icon['iconName'] = this._removeFaPrefix(value);
-        break;
-      case 'size':
-        var size = this._removeFaPrefix(value);
-        if (['xs', 'sm', 'lg', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].includes(size))
-          classes.push('fa-' + size);
-        break;
-      case 'fixed-width':
-        classes.push('fa-fw');
-        break;
-      case 'pull-left':
-      case 'pull-right':
-        this.classList.add('fa-' + key);
-        classes.push('fa-' + key);
-        break;
-      case 'border':
-      case 'spin':
-      case 'pulse':
-        classes.push('fa-' + key);
-        break;
-      case 'scale':
-        transform['size'] = 16 * this.scale / 100;
-        break;
-      case 'rotate':
-        transform['rotate'] = value;
-        break;
-      case 'translate-x':
-      case 'translate-y':
-        transform[key.replace(/^translate-/, '')] = value;
-        break;
-      case 'flip-x':
-        transform['flipX'] = value;
-        break;
-      case 'flip-y':
-        transform['flipY'] = value;
-        break;
-      case 'mask-prefix':
-        mask['prefix'] = value;
-        break;
-      case 'mask-name':
-        mask['iconName'] = this._removeFaPrefix(value);
-        break;
+    await this._lazyLoading(icon_prefix, this._removeFaPrefix(icon_name))
 
-      }
+    if (mask_prefix) {
+      await this._lazyLoading(mask_prefix, this._removeFaPrefix(mask_name))
     }
 
-    return fontawesome.icon(icon, { classes: classes, transform: transform, mask: mask }).html;
+    let icon = {
+      'prefix': icon_prefix,
+      'iconName': this._removeFaPrefix(icon_name)
+    };
+
+    let classes = [
+      [fixed_width, 'fa-fw'],
+      [pull_left, 'fa-pull-left'],
+      [pull_right, 'fa-pull-right'],
+      [border, 'fa-border'],
+      [spin, 'fa-spin'],
+      [pulse, 'fa-pulse'],
+      [
+        ['xs', 'sm', 'lg', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].includes(this._removeFaPrefix(size)), `fa-${this._removeFaPrefix(size)}`
+      ]
+    ].reduce((a, [condition, _class]) => {
+      if (condition) {
+        return [...a, _class]
+      }
+      return a
+    }, [])
+
+    let transform = {
+      'size': 16 * scale / 100,
+      rotate,
+      'x': translate_x,
+      'y': translate_y,
+      'flipX':flip_x,
+      'flipY':flip_y
+    };
+
+    let mask = {
+      'prefix': mask_prefix,
+      'iconName': this._removeFaPrefix(mask_name)
+    };
+
+    return html(fontawesome.icon(icon, {
+      classes,
+      transform,
+      mask
+    }).html);
   }
 
   _render(props) {
-    return html`
+    return html `
     <style>
       :host {
         display: inline-block;
@@ -121,7 +149,8 @@ class FaIcon extends LitElement {
         background-color: var(--icon-background-color, white);
       }
     </style>
-    ${style} ${unsafeHTML(this._computeIconSvgString(props))}`;
+    <style>${fontawesome.dom.css()}</style>
+    ${this._computeIconSvgString(this._computeProps(props))}`
   }
 }
 
